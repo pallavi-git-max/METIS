@@ -28,8 +28,6 @@ def create_app():
     login_manager.login_message_category = 'info'
 
     # Import blueprints
-
-
     from blueprints.auth.routes import auth_bp
     from blueprints.projects.routes import projects_bp
     from blueprints.approvals.routes import approvals_bp
