@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METIS Lab - User Dashboard</title>
+    <link rel="stylesheet" href="style_user_dash.css">
+    <script src="script_user_dash.js" defer></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <div class="logo">M</div>
+            <div class="logo-text">
+              <div class="logo-title">METIS Lab</div>
+              <div class="logo-subtitle">User Dashboard</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-menu">
+          <div class="menu-section">
+            <div class="menu-item active" data-page="dashboard">
+              <span class="menu-icon">🏠</span>
+              <span>Dashboard</span>
+            </div>
+          </div>
+
+          <div class="menu-section">
+            <div class="menu-label">MY WORKSPACE</div>
+            <div class="menu-item" data-page="profile">
+              <span class="menu-icon">👤</span>
+              <span>My Profile</span>
+            </div>
+            <div class="profile-submenu">
+              <div class="menu-item submenu-item" data-page="requests">
+                <span class="menu-icon">📋</span>
+                <span>My Requests</span>
+              </div>
+              <div class="menu-item submenu-item" data-page="submit">
+                <span class="menu-icon">📝</span>
+                <span>Submit Request</span>
+              </div>
+              <div class="menu-item submenu-item" data-page="analytics">
+                <span class="menu-icon">📊</span>
+                <span>Analytics</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="menu-section">
+            <div class="menu-label">RESOURCES</div>
+            <div class="menu-item" data-page="notifications">
+              <span class="menu-icon">🔔</span>
+              <span>Notifications</span>
+              <span class="menu-badge">3</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="logout-btn" onclick="logout()">
+            <span class="menu-icon">🚪</span>
+            <span>Logout</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+          <div class="header-left">
+            <h1 id="page-title">Dashboard</h1>
+            <p>Welcome back, <span id="user-greeting">John Doe</span></p>
+          </div>
+          <div class="header-right">
+            <div class="notification-btn" onclick="navigateToPage('notifications')">
+              <span>🔔</span>
+              <span class="notification-badge"></span>
+            </div>
+            <div class="profile-btn" id="user-avatar" onclick="navigateToPage('profile')">JD</div>
+          </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page-content active">
+          <div class="welcome-banner-card">
+            <div class="welcome-content">
+              <h2 class="welcome-title">
+                Welcome back, <span id="welcome-username">John</span>! 👋
+              </h2>
+              <p class="welcome-subtitle">
+                Here's what's happening with your requests today. You have 3
+                pending items that need your attention.
+              </p>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Total Requests</div>
+                  <div class="stat-value">12</div>
+                  <div class="stat-subtext">↗ 20% from last month</div>
+                </div>
+                <div class="stat-icon blue">📄</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Pending</div>
+                  <div class="stat-value">3</div>
+                  <div class="stat-subtext">Awaiting approval</div>
+                </div>
+                <div class="stat-icon yellow">⏳</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Approved</div>
+                  <div class="stat-value">8</div>
+                  <div class="stat-subtext">Successfully processed</div>
+                </div>
+                <div class="stat-icon green">✅</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Response Time</div>
+                  <div class="stat-value">2.5h</div>
+                  <div class="stat-subtext">Average processing</div>
+                </div>
+                <div class="stat-icon purple">⚡</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-grid">
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Recent Activity</h2>
+                  <div class="view-all-btn" onclick="navigateToPage('notifications')">View all →</div>
+                </div>
+                <div class="activity-list">
+                  <div class="activity-item">
+                    <div class="activity-icon success">✓</div>
+                    <div class="activity-details">
+                      <div class="activity-title">Request Approved</div>
+                      <div class="activity-time">2 hours ago</div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon info">+</div>
+                    <div class="activity-details">
+                      <div class="activity-title">New submission</div>
+                      <div class="activity-time">1 day ago</div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon warning">!</div>
+                    <div class="activity-details">
+                      <div class="activity-title">Review required</div>
+                      <div class="activity-time">3 days ago</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Quick Actions</h2>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                  <button class="btn btn-primary" onclick="navigateToPage('submit')">Submit New Request</button>
+                  <button class="btn btn-secondary" onclick="navigateToPage('requests')">View My Requests</button>
+                  <button class="btn btn-secondary" onclick="navigateToPage('analytics')">Check Analytics</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profile-page" class="page-content">
+          <div class="profile-section">
+            <div class="profile-card">
+              <div class="profile-avatar" id="profile-avatar">JD</div>
+              <div class="profile-name" id="profile-name">John Doe</div>
+              <div class="profile-role">Research Scientist</div>
+              <div class="profile-actions">
+                <button class="btn btn-primary" onclick="editProfile()">Edit Profile</button>
+                <button class="btn btn-secondary">Change Password</button>
+              </div>
+            </div>
+
+            <div class="profile-details">
+              <div class="card-header">
+                <h2 class="card-title">Personal Information</h2>
+                <div class="view-all-btn" onclick="editProfile()">Edit →</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Email Address</div>
+                <div class="detail-value">john.doe@metislab.com</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Phone Number</div>
+                <div class="detail-value">+1 (555) 123-4567</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Department</div>
+                <div class="detail-value">Artificial Intelligence Research</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Employee ID</div>
+                <div class="detail-value">ML2024001</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Join Date</div>
+                <div class="detail-value">January 15, 2024</div>
+              </div>
+              <div class="detail-group">
+                <div class="detail-label">Security Clearance</div>
+                <div class="detail-value">Level 3 - Confidential</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project History -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Project History</h2>
+              <div class="view-all-btn">View all →</div>
+            </div>
+            <div class="project-list">
+              <div class="project-item">
+                <div class="project-header">
+                  <div>
+                    <div class="project-title">Neural Network Optimization</div>
+                    <div class="project-status completed">Completed</div>
+                  </div>
+                </div>
+                <div class="project-description">
+                  Advanced research on optimizing neural network architectures for improved performance and efficiency.
+                </div>
+                <div class="project-meta">
+                  <span>Duration: 6 months</span>
+                  <span>Completed: Dec 2024</span>
+                </div>
+              </div>
+              <div class="project-item">
+                <div class="project-header">
+                  <div>
+                    <div class="project-title">Machine Learning Framework Development</div>
+                    <div class="project-status in-progress">In Progress</div>
+                  </div>
+                </div>
+                <div class="project-description">
+                  Building a comprehensive ML framework for rapid prototyping and deployment of AI models.
+                </div>
+                <div class="project-meta">
+                  <span>Duration: 8 months</span>
+                  <span>Started: Oct 2024</span>
+                </div>
+              </div>
+              <div class="project-item">
+                <div class="project-header">
+                  <div>
+                    <div class="project-title">Data Privacy Research</div>
+                    <div class="project-status on-hold">On Hold</div>
+                  </div>
+                </div>
+                <div class="project-description">
+                  Investigating privacy-preserving techniques for machine learning on sensitive datasets.
+                </div>
+                <div class="project-meta">
+                  <span>Duration: 4 months</span>
+                  <span>Paused: Nov 2024</span>
+                </div>
+              </div>
+              <div class="project-item">
+                <div class="project-header">
+                  <div>
+                    <div class="project-title">Computer Vision Pipeline</div>
+                    <div class="project-status completed">Completed</div>
+                  </div>
+                </div>
+                <div class="project-description">
+                  Developed an end-to-end computer vision pipeline for real-time object detection and classification.
+                </div>
+                <div class="project-meta">
+                  <span>Duration: 5 months</span>
+                  <span>Completed: Sep 2024</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Requests Page -->
+        <div id="requests-page" class="page-content">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">My Requests</h2>
+              <button class="btn btn-primary" onclick="navigateToPage('submit')">New Request</button>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Request ID</th>
+                    <th>Type</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>#REQ-2024-001</strong></td>
+                    <td>Data Access</td>
+                    <td>Dec 15, 2024</td>
+                    <td><span class="status-badge approved">Approved</span></td>
+                    <td>High</td>
+                    <td><button class="action-button">View</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>#REQ-2024-002</strong></td>
+                    <td>Lab Equipment</td>
+                    <td>Dec 14, 2024</td>
+                    <td><span class="status-badge pending">Pending</span></td>
+                    <td>Medium</td>
+                    <td><button class="action-button">Track</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>#REQ-2024-003</strong></td>
+                    <td>Software License</td>
+                    <td>Dec 13, 2024</td>
+                    <td><span class="status-badge approved">Approved</span></td>
+                    <td>Low</td>
+                    <td><button class="action-button">View</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>#REQ-2024-004</strong></td>
+                    <td>Training Access</td>
+                    <td>Dec 12, 2024</td>
+                    <td><span class="status-badge pending">Pending</span></td>
+                    <td>High</td>
+                    <td><button class="action-button">Track</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>#REQ-2024-005</strong></td>
+                    <td>Resource Allocation</td>
+                    <td>Dec 11, 2024</td>
+                    <td><span class="status-badge rejected">Rejected</span></td>
+                    <td>Medium</td>
+                    <td><button class="action-button">Details</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Request Filters -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Filter Requests</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+              <div class="form-group">
+                <label class="form-label">Status</label>
+                <select class="form-select">
+                  <option>All Status</option>
+                  <option>Pending</option>
+                  <option>Approved</option>
+                  <option>Rejected</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Type</label>
+                <select class="form-select">
+                  <option>All Types</option>
+                  <option>Data Access</option>
+                  <option>Lab Equipment</option>
+                  <option>Software License</option>
+                  <option>Training Access</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Priority</label>
+                <select class="form-select">
+                  <option>All Priorities</option>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Request Page -->
+        <!-- Submit Request Page -->
+        <div id="submit-page" class="page-content">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">METIS Lab Access Requisition Form</h2>
+            </div>
+            <form id="metisRequisitionForm">
+              <!-- Question 1: Fields -->
+              <div class="question-section">
+                <h4>1. Which of the following fields do you want to work with METIS?</h4>
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="ml" name="fields" value="machine-learning" />
+                    <label for="ml">Machine Learning</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="dl" name="fields" value="deep-learning" />
+                    <label for="dl">Deep Learning</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="nlp" name="fields" value="nlp" />
+                    <label for="nlp">Natural Language Processing</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="genai" name="fields" value="generative-ai" />
+                    <label for="genai">Generative AI</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="cv" name="fields" value="computer-vision" />
+                    <label for="cv">Computer Vision</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="vlm" name="fields" value="vision-language" />
+                    <label for="vlm">Vision-Language Model</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="cyber" name="fields" value="cyber-security" />
+                    <label for="cyber">Cyber Security</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="quantum" name="fields" value="quantum-ml" />
+                    <label for="quantum">Quantum ML</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="fields-other" name="fields" value="other" onchange="toggleOther('fields-other-specify')" />
+                    <label for="fields-other">Others</label>
+                  </div>
+                </div>
+                <div id="fields-other-specify" class="other-specify">
+                  <input type="text" placeholder="Please specify..." name="fields-other-text" class="form-input" />
+                </div>
+              </div>
+
+              <!-- Question 2: Package -->
+              <div class="question-section">
+                <h4>2. Which package do you want to use?</h4>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" id="basic" name="package" value="basic" required />
+                    <label for="basic">Basic (NumPy, Pandas, Matplotlib, Scikit-learn, Seaborn, SciPy)</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="moderate" name="package" value="moderate" />
+                    <label for="moderate">Basic + Moderate (TensorFlow, Keras, PyTorch, XGBoost, LightGBM, OpenCV, NLTK, Spacy)</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="advance" name="package" value="advance" />
+                    <label for="advance">Basic + Moderate + Advance (Hugging Face, FastAI, ONNX, Dask, Ray, Horovod, etc.)</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="package-other" name="package" value="other" onchange="toggleOther('package-other-specify')" />
+                    <label for="package-other">Others</label>
+                  </div>
+                </div>
+                <div id="package-other-specify" class="other-specify">
+                  <input type="text" placeholder="Please specify..." name="package-other-text" class="form-input" />
+                </div>
+              </div>
+
+              <!-- Question 3: Dataset Status -->
+              <div class="question-section">
+                <h4>3. Do you already have the dataset, or are you planning to download it?</h4>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" id="have-dataset" name="dataset-status" value="have" required />
+                    <label for="have-dataset">I have the dataset</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="download-dataset" name="dataset-status" value="download" />
+                    <label for="download-dataset">I am going to download it</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="create-dataset" name="dataset-status" value="create" />
+                    <label for="create-dataset">I will create it myself</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="dataset-other" name="dataset-status" value="other" onchange="toggleOther('dataset-other-specify')" />
+                    <label for="dataset-other">Others</label>
+                  </div>
+                </div>
+                <div id="dataset-other-specify" class="other-specify">
+                  <input type="text" placeholder="Please specify..." name="dataset-other-text" class="form-input" />
+                </div>
+              </div>
+
+              <!-- Question 4: Dataset Size -->
+              <div class="question-section">
+                <h4>4. What is the size of the dataset are you planning to use for your analysis or project?</h4>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" id="size-small" name="dataset-size" value="<200mb" required />
+                    <label for="size-small">&lt; 200 MB</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="size-medium" name="dataset-size" value="200-500mb" />
+                    <label for="size-medium">&gt; 200 MB - &lt;500 MB</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="size-large" name="dataset-size" value="500mb-1gb" />
+                    <label for="size-large">&gt;500 MB - &lt; 1GB</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="size-xlarge" name="dataset-size" value="1-5gb" />
+                    <label for="size-xlarge">&gt;1GB - &lt;5 GB</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="size-huge" name="dataset-size" value=">5gb" />
+                    <label for="size-huge">&gt;5 GB</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Question 5: Data Type -->
+              <div class="question-section">
+                <h4>5. What type of data are you planning to use for your project or analysis?</h4>
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="text-data" name="data-type" value="text" />
+                    <label for="text-data">Text based</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="image-data" name="data-type" value="image" />
+                    <label for="image-data">Image based</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="speech-data" name="data-type" value="speech" />
+                    <label for="speech-data">Speech (voice) based</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="video-data" name="data-type" value="video" />
+                    <label for="video-data">Video based</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="sensor-data" name="data-type" value="sensor" />
+                    <label for="sensor-data">Sensor data</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="geo-data" name="data-type" value="geospatial" />
+                    <label for="geo-data">Geospatial data</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="data-other" name="data-type" value="other" onchange="toggleOther('data-other-specify')" />
+                    <label for="data-other">Others</label>
+                  </div>
+                </div>
+                <div id="data-other-specify" class="other-specify">
+                  <input type="text" placeholder="Please specify..." name="data-other-text" class="form-input" />
+                </div>
+              </div>
+
+              <!-- Question 6: Computational Power -->
+              <div class="question-section">
+                <h4>6. What level of computational power do you want to use?</h4>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" id="cores-low" name="cores" value="<5" required />
+                    <label for="cores-low">&lt; 5 cores</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="cores-medium" name="cores" value="5-10" />
+                    <label for="cores-medium">5 cores – 10 cores</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="cores-high" name="cores" value="10-15" />
+                    <label for="cores-high">10 to 15 cores</label>
+                  </div>
+                </div>
+              </div>
+              <div class="nda-container">
+                <div class="nda-header">
+                  <h1>Non-Disclosure Agreement</h1>
+                  <p class="subtitle">Official METIS Project NDA Form</p>
+                </div>
+          
+               
+          
+                <div class="nda-content">
+                  <div class="nda-title">
+                    <h2>CHRIST (Deemed to be University)</h2>
+                    <h2>Bangalore Yeshwanthpur Campus</h2>
+                    <h3>Non-Disclosure Agreement (NDA) for Access to METIS Lab (BYC)</h3>
+                    <h3>
+                      Model-driven Explorative Technologies and Intelligent Solutions
+                      (METIS) Lab
+                    </h3>
+                  </div>
+          
+                  <p>
+                    This Non-Disclosure Agreement ("Agreement") is entered into by and
+                    between CHRIST (Deemed to be University) (hereinafter referred to as
+                    "the University") and the User (hereinafter referred to as "the User")
+                    for the purpose of granting access to the METIS Lab facilities. The
+                    User agrees to the following terms and conditions to ensure the
+                    confidentiality, security, and proper use of the lab resources.
+                  </p>
+          
+                  <div class="section">
+                    <h4>1. Purpose</h4>
+                    <p>
+                      The purpose of this Agreement is to protect the confidentiality of
+                      the METIS Lab's systems, data, and resources while allowing the User
+                      to utilize the lab for research, development, and exploration
+                      activities.
+                    </p>
+                  </div>
+          
+                  <div class="section">
+                    <h4>2. Confidentiality Obligations</h4>
+                    <p>
+                      The User agrees to maintain the confidentiality of all information,
+                      systems, and resources accessed or used in the METIS Lab. This
+                      includes, but is not limited to:
+                    </p>
+                    <ul>
+                      <li>
+                        <strong>System Credentials:</strong> The User shall not share
+                        system credentials (e.g., usernames, passwords) with any
+                        unauthorized individuals, including fellow Faculty members,
+                        Scholars and students.
+                      </li>
+                      <li>
+                        <strong>Data Confidentiality:</strong> The User shall not disclose
+                        any data, datasets, or research outputs obtained or generated in
+                        the lab to unauthorized parties.
+                      </li>
+                      <li>
+                        <strong>Prohibited Data Transfer:</strong> Data transfer shall not
+                        be conducted physically through devices such as USB drives,
+                        external storage, or cloud services like Google Drive. All data
+                        transfers shall be exclusively managed by authorized IT Services
+                        personnel.
+                      </li>
+                    </ul>
+                  </div>
+          
+                  <div class="section">
+                    <h4>3. Data Transfer and System Allocation</h4>
+                    <ul>
+                      <li>
+                        <strong>Data Transfer:</strong> All data transfers must be managed
+                        by authorized IT service personnel. The IT team must have
+                        appropriate knowledge of the dataset to ensure proper handling.
+                      </li>
+                      <li>
+                        <strong>System Allocation:</strong> The allocation of systems and
+                        resources for data-related activities shall be the sole
+                        responsibility of the IT service officials. The User must adhere
+                        to the allocated resources and not attempt to access unauthorized
+                        systems or data.
+                      </li>
+                    </ul>
+                  </div>
+          
+                  <div class="section">
+                    <h4>4. Cost Structure</h4>
+                    <ul>
+                      <li>
+                        <strong>Cost for Utilizing the Lab:</strong> The cost for
+                        utilizing the METIS Lab is as mentioned in the costing table
+                        provided in the lab requisition form. The cost is calculated
+                        solely based on the details provided by the user in the
+                        requisition form.
+                      </li>
+                      <li>
+                        <strong
+                          >Cost Exemption for Exploration and Initial Development:</strong
+                        >
+                        No charges shall be incurred for activities related to model
+                        fine-tuning, exploration, and learning on the dataset mentioned as
+                        per the lab requisition form / initial transfer, provided these
+                        activities strictly align with and do not exceed the user's stated
+                        requirements in the requisition form. If the user requires
+                        additional dataset for the same model or different dataset /
+                        model, an additional cost will be incurred as below:
+                      </li>
+                      <li>
+                        <strong>Additional Cost for Dataset Transfer/Download:</strong> If
+                        additional datasets are transferred or downloaded during the
+                        process, an additional cost will be incurred. This additional cost
+                        will be calculated and communicated to the user during the report
+                        handover.
+                      </li>
+                      <li>
+                        <strong>Payment of Additional Cost:</strong> The user is required
+                        to pay the additional cost, if any, before obtaining the final
+                        report or any output generated from the lab. Failure to pay the
+                        additional cost may result in delays in the release of the report
+                        or other outputs.
+                      </li>
+                      <li>
+                        <strong>Dataset Retention and Reuse:</strong> The dataset shall
+                        remain on the server for a maximum period of three months. After
+                        this period, it will be permanently removed from the server. If
+                        the user wishes to reuse the same dataset, applicable charges will
+                        be incurred as per the lab's pricing structure.
+                      </li>
+                    </ul>
+                  </div>
+          
+                  <div class="section">
+                    <h4>5. Acknowledgement</h4>
+                    <p>
+                      The user is responsible for acknowledging the use / computational
+                      resources support of the METIS Lab in their publications as below:
+                    </p>
+                    <div class="acknowledgement-box">
+                      "The authors acknowledge the use of the Model-driven Explorative
+                      Technologies and Intelligent Solutions (METIS) Lab at CHRIST (Deemed
+                      to be University), Bangalore Yeshwanthpur Campus, for providing the
+                      computational resources and facilities that supported this
+                      research."
+                    </div>
+                    <p>
+                      Please also send a copy of the publication (email), or the
+                      publication information (citation, DOI) to
+                      <strong>metis.csbyc@christuniversity.in</strong>
+                    </p>
+                  </div>
+          
+                  <div class="section">
+                    <h4>6. Prohibited Activities</h4>
+                    <p>The User agrees not to engage in the following activities:</p>
+                    <ul>
+                      <li>Unauthorized sharing of system credentials.</li>
+                      <li>
+                        Data transfer or storage of data in the lab's designated systems
+                        without the permission of the IT Services personnel.
+                      </li>
+                      <li>
+                        Unauthorized data transfer or storage outside the lab's designated
+                        systems.
+                      </li>
+                      <li>
+                        Use of lab resources for purposes other than those stated in the
+                        requisition form.
+                      </li>
+                      <li>
+                        Any activity that may compromise the security or integrity of the
+                        lab's systems or data.
+                      </li>
+                    </ul>
+                  </div>
+          
+                  <div class="section">
+                    <h4>7. Term and Termination</h4>
+                    <ul>
+                      <li>
+                        This Agreement shall remain in effect for the duration of the
+                        User's access to the METIS Lab.
+                      </li>
+                      <li>
+                        The University reserves the right to terminate the User's access
+                        to the lab at any time if the User violates the terms of this
+                        Agreement.
+                      </li>
+                    </ul>
+                  </div>
+          
+                  <div class="section">
+                    <h4>8. Governing Law</h4>
+                    <p>
+                      This Agreement shall be governed by and construed in accordance with
+                      the guidelines framed for the METIS Lab. Any disputes arising out of
+                      or in connection with this Agreement shall be subject to the
+                      exclusive purview of the CHRIST (Deemed to be University)
+                      administration.
+                    </p>
+                  </div>
+          
+                  
+                </div>
+          
+                <div class="nda-footer">
+                  <button
+                    class="back-btn"
+                    onclick="window.location.href='college-dashboard.html#project-forms'"
+                  >
+                    
+                  </button>
+                </div>
+              </div>
+
+              <!-- Declaration Section -->
+              <div class="declaration-section">
+                <h3 class="card-title" style="margin-bottom: 15px;">Declaration</h3>
+                <div class="declaration-text" style="background: var(--gray-50); padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--primary);">
+                  <p style="margin-bottom: 15px; line-height: 1.6;">
+                    By signing this Agreement, the User acknowledges that they have read, understood, and agreed to the terms and conditions outlined herein.
+                  </p>
+                  <p style="line-height: 1.6;">
+                    I/We hereby will not disclose the development and implementation of our research model, which was done at METIS Lab. The research team will try to publish the observations obtained from the aforesaid practice. It is further agreed that in the event the article is not published in a recognized Conference or a peer-reviewed journal with indexing, the undersigned shall be liable to pay the utilization fee for the resources, time, and efforts invested in the development of the research model to the METIS Lab.
+                  </p>
+                </div>
+                <div class="checkbox-item" style="background: white; max-width: fit-content; padding: 15px; border-radius: 8px; border: 2px solid var(--primary);">
+                  <input type="checkbox" id="agree" name="agree" required />
+                  <label for="agree"><strong>I agree to the terms and conditions</strong></label>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 15px; margin-top: 30px; justify-content: center;">
+                <button type="submit" class="btn btn-primary">Submit Requisition</button>
+                <button type="button" class="btn btn-secondary">Save Draft</button>
+                <button type="reset" class="btn btn-secondary">Clear Form</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+        <!-- Analytics Page -->
+        <div id="analytics-page" class="page-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Total Requests</div>
+                  <div class="stat-value">24</div>
+                  <div class="stat-subtext">↗ 15% from last quarter</div>
+                </div>
+                <div class="stat-icon blue">📊</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Approval Rate</div>
+                  <div class="stat-value">87%</div>
+                  <div class="stat-subtext">Above average</div>
+                </div>
+                <div class="stat-icon green">✅</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Avg Response Time</div>
+                  <div class="stat-value">2.3 days</div>
+                  <div class="stat-subtext">↓ 0.5 days improvement</div>
+                </div>
+                <div class="stat-icon purple">⚡</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Active Projects</div>
+                  <div class="stat-value">3</div>
+                  <div class="stat-subtext">Currently running</div>
+                </div>
+                <div class="stat-icon yellow">🚀</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+            <div>
+              <div class="chart-container">
+                <div class="card-header">
+                  <h2 class="card-title">Request Trends (Last 6 Months)</h2>
+                </div>
+                <div class="chart-placeholder">
+                  📈 Request trends chart would be displayed here
+                </div>
+              </div>
+
+              <div class="chart-container">
+                <div class="card-header">
+                  <h2 class="card-title">Request Types Distribution</h2>
+                </div>
+                <div class="chart-placeholder">
+                  🥧 Request types pie chart would be displayed here
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Performance Metrics</h2>
+                </div>
+                <div class="activity-list">
+                  <div class="activity-item">
+                    <div class="activity-icon success">📊</div>
+                    <div class="activity-details">
+                      <div class="activity-title">High Priority Completion</div>
+                      <div class="activity-time">95% success rate</div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon info">⏱️</div>
+                    <div class="activity-details">
+                      <div class="activity-title">Response Time</div>
+                      <div class="activity-time">2.3 days average</div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon warning">📋</div>
+                    <div class="activity-details">
+                      <div class="activity-title">Pending Requests</div>
+                      <div class="activity-time">3 awaiting review</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="card-title">Recent Achievements</h2>
+                </div>
+                <div class="activity-list">
+                  <div class="activity-item">
+                    <div class="activity-icon success">🏆</div>
+                    <div class="activity-details">
+                      <div class="activity-title">Fast Track Approval</div>
+                      <div class="activity-time">Request approved in 1 day</div>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon success">⭐</div>
+                    <div class="activity-details">
+                      <div class="activity-title">5-Star Project Rating</div>
+                      <div class="activity-time">Excellent project delivery</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notifications Page -->
+        <div id="notifications-page" class="page-content">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Notifications</h2>
+              <div class="view-all-btn" onclick="markAllRead()">Mark all read</div>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item" style="border-left: 3px solid var(--primary); background: rgba(99, 102, 241, 0.05);">
+                <div class="activity-icon success">🔔</div>
+                <div class="activity-details">
+                  <div class="activity-title">Request Approved</div>
+                  <div class="activity-time">Your data access request has been approved - 2 hours ago</div>
+                </div>
+              </div>
+              <div class="activity-item" style="border-left: 3px solid var(--warning); background: rgba(245, 158, 11, 0.05);">
+                <div class="activity-icon warning">📋</div>
+                <div class="activity-details">
+                  <div class="activity-title">Document Required</div>
+                  <div class="activity-time">Please upload additional documents for REQ-2024-002 - 1 day ago</div>
+                </div>
+              </div>
+              <div class="activity-item" style="border-left: 3px solid var(--info); background: rgba(59, 130, 246, 0.05);">
+                <div class="activity-icon info">✅</div>
+                <div class="activity-details">
+                  <div class="activity-title">Profile Updated</div>
+                  <div class="activity-time">Your profile information has been successfully updated - 3 days ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon warning">⏰</div>
+                <div class="activity-details">
+                  <div class="activity-title">Deadline Reminder</div>
+                  <div class="activity-time">NDA renewal due in 5 days - 1 week ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon success">🎉</div>
+                <div class="activity-details">
+                  <div class="activity-title">Project Completed</div>
+                  <div class="activity-time">Neural Network Optimization project marked as completed - 2 weeks ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notification Settings -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Notification Preferences</h2>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked style="transform: scale(1.2);">
+                <span>Email notifications for request updates</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked style="transform: scale(1.2);">
+                <span>Push notifications for urgent requests</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" style="transform: scale(1.2);">
+                <span>Weekly summary reports</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" checked style="transform: scale(1.2);">
+                <span>Project milestone notifications</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

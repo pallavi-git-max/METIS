@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Metis Portal{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>Welcome, {{ current_user.email }}</h2>
+    <section id="projectRequestsSection">
+        <h3>Your Project Requests</h3>
+        <ul id="projectRequestsList"></ul>
+        <button id="openRequestFormBtn">Submit New Project Request</button>
+    </section>
+    <section id="approvalsSection" {% if current_user.role != 'admin' %}style="display:none"{% endif %}>
+        <h3>Pending Approvals</h3>
+        <ul id="pendingApprovalsList"></ul>
+    </section>
+    <section id="ndaUploadSection">
+        <h3>Upload NDA Document (PDF)</h3>
+        <form id="ndaUploadForm" enctype="multipart/form-data" method="post">
+            <input type="file" id="nda_pdf" name="nda_pdf" accept="application/pdf" required>
+            <button type="submit">Upload NDA</button>
+            <div id="ndaUploadMessage"></div>
+        </form>
+    </section>
+</div>
+
+<!-- Modal for project submission -->
+<div id="requestModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" id="closeRequestModal">&times;</span>
+        <h3>Submit Project Request</h3>
+        <form id="projectRequestForm">
+            <label for="project_title">Project Title</label>
+            <input type="text" id="project_title" name="project_title" required maxlength="255">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required maxlength="2000"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="requestFormMessage"></div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('js_static', filename='dashboard.js') }}"></script>
+{% endblock %}

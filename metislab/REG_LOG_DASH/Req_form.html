@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METIS Lab Requisition Form</title>
+    <link rel="stylesheet" href="Req_form_style.css" />
+    <link rel="script" href="Req_form_script.js" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>METIS Lab Access Requisition Form</h1>
+      </div>
+
+        <form id="metisRequisitionForm">
+          <div class="question-section">
+            <h4>
+              1. Which of the following fields do you want to work with METIS?
+            </h4>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="ml"
+                  name="fields"
+                  value="machine-learning"
+                />
+                <label for="ml">Machine Learning</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="dl"
+                  name="fields"
+                  value="deep-learning"
+                />
+                <label for="dl">Deep Learning</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="nlp" name="fields" value="nlp" />
+                <label for="nlp">Natural Language Processing</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="genai"
+                  name="fields"
+                  value="generative-ai"
+                />
+                <label for="genai">Generative AI</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="cv"
+                  name="fields"
+                  value="computer-vision"
+                />
+                <label for="cv">Computer Vision</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="vlm"
+                  name="fields"
+                  value="vision-language"
+                />
+                <label for="vlm">Vision-Language Model</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="cyber"
+                  name="fields"
+                  value="cyber-security"
+                />
+                <label for="cyber">Cyber Security</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="quantum"
+                  name="fields"
+                  value="quantum-ml"
+                />
+                <label for="quantum">Quantum ML</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="fields-other"
+                  name="fields"
+                  value="other"
+                  onclick="toggleOther('fields-other-specify')"
+                />
+                <label for="fields-other">Others</label>
+              </div>
+            </div>
+            <div id="fields-other-specify" class="other-specify">
+              <input
+                type="text"
+                placeholder="Please specify..."
+                name="fields-other-text"
+              />
+            </div>
+          </div>
+
+          <div class="question-section">
+            <h4>2. Which package do you want to use?</h4>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="basic"
+                  name="package"
+                  value="basic"
+                  required
+                />
+                <label for="basic"
+                  >Basic (NumPy, Pandas, Matplotlib, Scikit-learn, Seaborn,
+                  SciPy)</label
+                >
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="moderate"
+                  name="package"
+                  value="moderate"
+                />
+                <label for="moderate"
+                  >Basic + Moderate (TensorFlow, Keras, PyTorch, XGBoost,
+                  LightGBM, OpenCV, NLTK, Spacy)</label
+                >
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="advance"
+                  name="package"
+                  value="advance"
+                />
+                <label for="advance"
+                  >Basic + Moderate + Advance (Hugging Face, FastAI, ONNX, Dask,
+                  Ray, Horovod, etc.)</label
+                >
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="package-other"
+                  name="package"
+                  value="other"
+                  onclick="toggleOther('package-other-specify')"
+                />
+                <label for="package-other">Others</label>
+              </div>
+            </div>
+            <div id="package-other-specify" class="other-specify">
+              <input
+                type="text"
+                placeholder="Please specify..."
+                name="package-other-text"
+              />
+            </div>
+          </div>
+
+          <div class="question-section">
+            <h4>
+              3. Do you already have the dataset, or are you planning to
+              download it?
+            </h4>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="have-dataset"
+                  name="dataset-status"
+                  value="have"
+                  required
+                />
+                <label for="have-dataset">I have the dataset</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="download-dataset"
+                  name="dataset-status"
+                  value="download"
+                />
+                <label for="download-dataset">I am going to download it</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="create-dataset"
+                  name="dataset-status"
+                  value="create"
+                />
+                <label for="create-dataset">I will create it myself</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="dataset-other"
+                  name="dataset-status"
+                  value="other"
+                  onclick="toggleOther('dataset-other-specify')"
+                />
+                <label for="dataset-other">Others</label>
+              </div>
+            </div>
+            <div id="dataset-other-specify" class="other-specify">
+              <input
+                type="text"
+                placeholder="Please specify..."
+                name="dataset-other-text"
+              />
+            </div>
+          </div>
+
+          <div class="question-section">
+            <h4>
+              4. What is the size of the dataset are you planning to use for
+              your analysis or project?
+            </h4>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="size-small"
+                  name="dataset-size"
+                  value="<200mb"
+                  required
+                />
+                <label for="size-small">&lt; 200 MB</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="size-medium"
+                  name="dataset-size"
+                  value="200-500mb"
+                />
+                <label for="size-medium">&gt; 200 MB - &lt;500 MB</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="size-large"
+                  name="dataset-size"
+                  value="500mb-1gb"
+                />
+                <label for="size-large">&gt;500 MB - &lt; 1GB</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="size-xlarge"
+                  name="dataset-size"
+                  value="1-5gb"
+                />
+                <label for="size-xlarge">&gt;1GB - &lt;5 GB</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="size-huge"
+                  name="dataset-size"
+                  value=">5gb"
+                />
+                <label for="size-huge">&gt;5 GB</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="question-section">
+            <h4>
+              5. What type of data are you planning to use for your project or
+              analysis?
+            </h4>
+            <div class="checkbox-group">
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="text-data"
+                  name="data-type"
+                  value="text"
+                />
+                <label for="text-data">Text based</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="image-data"
+                  name="data-type"
+                  value="image"
+                />
+                <label for="image-data">Image based</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="speech-data"
+                  name="data-type"
+                  value="speech"
+                />
+                <label for="speech-data">Speech (voice) based</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="video-data"
+                  name="data-type"
+                  value="video"
+                />
+                <label for="video-data">Video based</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="sensor-data"
+                  name="data-type"
+                  value="sensor"
+                />
+                <label for="sensor-data">Sensor data</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="geo-data"
+                  name="data-type"
+                  value="geospatial"
+                />
+                <label for="geo-data">Geospatial data</label>
+              </div>
+              <div class="checkbox-item">
+                <input
+                  type="checkbox"
+                  id="data-other"
+                  name="data-type"
+                  value="other"
+                  onclick="toggleOther('data-other-specify')"
+                />
+                <label for="data-other">Others</label>
+              </div>
+            </div>
+            <div id="data-other-specify" class="other-specify">
+              <input
+                type="text"
+                placeholder="Please specify..."
+                name="data-other-text"
+              />
+            </div>
+          </div>
+
+          <div class="question-section">
+            <h4>6. What level of computational power do you want to use?</h4>
+            <div class="radio-group">
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="cores-low"
+                  name="cores"
+                  value="<5"
+                  required
+                />
+                <label for="cores-low">&lt; 5 cores</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="cores-medium"
+                  name="cores"
+                  value="5-10"
+                />
+                <label for="cores-medium">5 cores – 10 cores</label>
+              </div>
+              <div class="radio-item">
+                <input
+                  type="radio"
+                  id="cores-high"
+                  name="cores"
+                  value="10-15"
+                />
+                <label for="cores-high">10 to 15 cores</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="declaration-section">
+            <h3>Declaration</h3>
+            <div class="declaration-text">
+              <p>
+                By signing this Agreement, the User acknowledges that they have
+                read, understood, and agreed to the terms and conditions
+                outlined herein.
+              </p>
+              <p style="margin-top: 10px">
+                I/We hereby will not disclose the development and implementation of our
+                research model, which was done at METIS Lab. The research team
+                will try to publish the observations obtained from the aforesaid
+                practice. It is further agreed that in the event the article is
+                not published in a recognized Conference or a peer-reviewed
+                journal with indexing, the undersigned shall be liable to pay
+                the utilization fee for the resources, time, and efforts
+                invested in the development of the research model to the METIS
+                Lab.
+              </p>
+            </div>
+            <div
+              class="checkbox-item"
+              style="background: white; max-width: fit-content">
+              <input type="checkbox" id="agree" name="agree" required />
+              <label for="agree"
+                ><strong>I agree to the terms and conditions</strong></label>
+            </div>
+          </form>
+        <div class="submit-section">
+            <button type="submit" class="submit-btn">Submit Requisition</button>
+        </div>
+      </div>
+  </body>
+</html>

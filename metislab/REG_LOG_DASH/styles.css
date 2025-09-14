@@ -1,0 +1,176 @@
+/* Header container */
+.logo-header {
+  background :linear-gradient(
+    90deg,
+    rgb(52, 117, 179) 14%,   /* lighter version of rgb(12,77,139) */
+    rgb(28, 129, 216) 31%,   /* lighter version of rgb(18,109,196) */
+    rgb(52, 117, 179) 53%    /* lighter again */
+  );
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+  color:white ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Enlarged Logo */
+.logo-img {
+  height: 70px;      /* enlarge logo */
+  position: absolute;
+  left: 50px;        /* keep at left edge */
+  top: 10px;         /* slight padding from top */
+}
+
+/* Centered Text */
+.logo-text {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.header-buttons {
+  position: absolute;
+  right: 20px;
+  top: 25px;
+}
+
+.header-buttons .btn {
+  margin-left: 10px;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 6px 16px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Carousel size reduction */
+.carousel {
+  max-width: 90%;     /* reduce width */
+  max-height: 600px;  /* reduce height */
+  margin: 10px auto;  /* center */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Make sure images fit */
+.carousel-img {
+  height: 600px;      /* fixed height */
+  object-fit: cover;  /* crop nicely */
+}
+
+/* Caption adjustments */
+.carousel-caption h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Buttons */
+.header-buttons .btn {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Gradient Shine Effect */
+.header-buttons .btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: all 0.5s;
+}
+
+.header-buttons .btn:hover::before {
+  left: 100%;
+}
+
+/* Pop-out effect */
+.header-buttons .btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Specific Colors */
+.btn-primary {
+  background: linear-gradient(90deg, #0c4d8b, #126dc4);
+}
+
+.btn-success {
+  background: linear-gradient(90deg, #1d9a45, #28c76f);
+}
+
+/* ====== LAB INFO SECTION ====== */
+.lab-info-section {
+  padding: 40px 4%;   /* less side padding so it uses more screen width */
+  background: #f8f9fc;
+}
+
+.lab-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;   /* space between image and text */
+  padding-right: 25px;
+}
+
+.lab-info-image {
+  flex: 0 0 35%;   /* image gets 35% of width */
+  text-align: left;
+}
+
+.lab-info-image img {
+  width: 100%;
+  height: 280px;   /* taller image for balance */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-left: 20px; /* push image slightly away from extreme left */
+}
+
+.lab-info-content {
+  flex: 0 0 65%;   /* text box takes 65% */
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.lab-info-content:hover {
+  transform: translateY(-5px);
+}
+
+.lab-info-content h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.lab-info-content p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #555;
+}
