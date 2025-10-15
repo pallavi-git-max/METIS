@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METIS Lab - Guide Dashboard</title>
+    <link rel="stylesheet" href="unified-admin.css" />
+    <script src="script_guide_dash.js" defer></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <div class="logo">M</div>
+            <div class="logo-text">
+              <div class="logo-title">METIS Lab</div>
+              <div class="logo-subtitle">Guide Dashboard</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-menu">
+          <div class="menu-section">
+            <a href="#" class="menu-item active">
+              <span class="menu-icon">📊</span>
+              <span>Dashboard</span>
+            </a>
+          </div>
+
+          <div class="menu-section">
+            <div class="menu-label">APPROVALS</div>
+            <a href="#" class="menu-item">
+              <span class="menu-icon">⏳</span>
+              <span>Pending Requests</span>
+              <span class="menu-badge" id="pending-badge">0</span>
+            </a>
+            <a href="#" class="menu-item">
+              <span class="menu-icon">✅</span>
+              <span>Approved Requests</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <a href="#" class="logout-btn" onclick="logout()">
+            <span class="menu-icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+          <div class="header-left">
+            <h1 id="page-title">Guide Dashboard</h1>
+            <p>Welcome back, <span id="guide-greeting"></span></p>
+          </div>
+          <div class="header-right">
+            <div class="profile-btn" id="guide-avatar" onclick="toggleGuideProfileDropdown()">
+              <span class="avatar-icon">👤</span>
+            </div>
+            <div class="profile-dropdown" id="guide-profile-dropdown">
+              <div class="profile-dropdown-header">
+                <div class="profile-dropdown-avatar" id="guide-profile-dropdown-avatar">
+                  <span class="avatar-icon">👤</span>
+                </div>
+                <div class="profile-dropdown-info">
+                  <div class="profile-dropdown-name" id="guide-profile-dropdown-name">Guide User</div>
+                  <div class="profile-dropdown-email" id="guide-profile-dropdown-email">guide@metislab.edu</div>
+                </div>
+              </div>
+              <div class="profile-dropdown-details">
+                <div class="profile-detail-item">
+                  <span class="profile-detail-label">Role:</span>
+                  <span class="profile-detail-value" id="guide-profile-dropdown-role">Guide</span>
+                </div>
+                <div class="profile-detail-item">
+                  <span class="profile-detail-label">User ID:</span>
+                  <span class="profile-detail-value" id="guide-profile-dropdown-user-id">GUIDE001</span>
+                </div>
+                <div class="profile-detail-item">
+                  <span class="profile-detail-label">Phone:</span>
+                  <span class="profile-detail-value" id="guide-profile-dropdown-phone">+1 234-567-8900</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Pending Requests</div>
+                  <div class="stat-value" id="stat-pending">0</div>
+                  <div class="stat-subtext">Awaiting your approval</div>
+                </div>
+                <div class="stat-icon yellow">⏳</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Approved Today</div>
+                  <div class="stat-value" id="stat-approved-today">0</div>
+                  <div class="stat-subtext">Requests approved</div>
+                </div>
+                <div class="stat-icon green">✅</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-info">
+                  <div class="stat-label">Total Approved</div>
+                  <div class="stat-value" id="stat-total-approved">0</div>
+                  <div class="stat-subtext">All time approvals</div>
+                </div>
+                <div class="stat-icon blue">📊</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pending Requests Section -->
+          <div class="approval-section">
+            <div class="approval-card">
+              <div class="approval-header">
+                <h2 class="approval-title">Pending Requests for Approval</h2>
+                <span class="pending-badge" id="pending-count">0 Pending</span>
+              </div>
+
+              <div id="pending-requests-list"></div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+              <!-- Quick Actions -->
+              <div class="quick-actions" style="margin-bottom: 20px">
+                <h3 class="quick-actions-title">Quick Actions</h3>
+                <div class="action-buttons">
+                  <button class="action-btn approve" onclick="approveSelected()">
+                    ✓ Approve Selected
+                  </button>
+                  <button class="action-btn reject" onclick="rejectSelected()">✗ Reject Request</button>
+                </div>
+              </div>
+
+              <!-- Recent Approvals -->
+              <div class="users-card">
+                <h3 class="users-title">Recent Approvals</h3>
+                <div id="recent-approvals"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Requests - METIS Lab</title>
+    <link rel="stylesheet" href="unified-admin.css">
+    <style>
+        .filter-bar {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #636e72;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            padding: 8px 12px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 150px;
+        }
+        
+        .requests-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .request-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .request-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .request-card.status-closed {
+            border-left-color: #95a5a6;
+            opacity: 0.7;
+        }
+        
+        .request-card.status-approved {
+            border-left-color: #2ed573;
+        }
+        
+        .request-card.status-rejected {
+            border-left-color: #ff6b6b;
+        }
+        
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        .request-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 5px;
+        }
+        
+        .request-id {
+            font-size: 12px;
+            color: #636e72;
+        }
+        
+        .request-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .request-status.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .request-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .request-status.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .request-status.closed {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+        
+        .request-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            font-size: 13px;
+        }
+        
+        .info-label {
+            color: #636e72;
+            font-weight: 600;
+        }
+        
+        .info-value {
+            color: #2d3436;
+        }
+        
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e1e4e8;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-view {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+        }
+        
+        .btn-close {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-close:hover {
+            background: #7f8c8d;
+            transform: translateY(-1px);
+        }
+        
+        .btn-close:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .no-requests {
+            text-align: center;
+            padding: 60px 20px;
+            color: #636e72;
+            background: white;
+            border-radius: 12px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .pagination button {
+            padding: 8px 16px;
+            border: 1px solid #e1e4e8;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .pagination button:hover:not(:disabled) {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination .active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo">M</div>
+                    <div class="logo-text">
+                        <div class="logo-title">METIS Lab</div>
+                        <div class="logo-subtitle">Admin Dashboard</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <a href="admin_dash.html" class="menu-item">
+                        <span class="menu-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-label">MANAGE REQUESTS</div>
+                    <a href="all_requests.html" class="menu-item active">
+                        <span class="menu-icon">📋</span>
+                        <span>All Requests</span>
+                    </a>
+                    <a href="admin_workflow_dashboard.html" class="menu-item">
+                        <span class="menu-icon">✅</span>
+                        <span>Approval Queue</span>
+                    </a>
+                    <a href="admin_rejected_requests.html" class="menu-item">
+                        <span class="menu-icon">✖</span>
+                        <span>Rejected Requests</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <a href="Admin_usr_manage.html" class="menu-item">
+                        <span class="menu-icon">👥</span>
+                        <span>User Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn" onclick="logout()">
+                    <span class="menu-icon">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>All Requests</h1>
+                    <p>View and manage all project requests</p>
+                </div>
+                <div class="header-right">
+                    <div class="profile-btn" id="admin-avatar" onclick="toggleAdminProfileDropdown()">
+                        <span class="avatar-icon">👤</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Wrapper -->
+            <div style="padding: 30px 40px; flex: 1; overflow-y: auto;">
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                <div class="filter-group">
+                    <label>Status</label>
+                    <select id="status-filter">
+                        <option value="">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="guide_approved">Guide Approved</option>
+                        <option value="hod_approved">HOD Approved</option>
+                        <option value="it_services_approved">IT Services Approved</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Search by ID</label>
+                    <input type="number" id="search-input" placeholder="Enter request ID...">
+                </div>
+                
+                <div class="filter-group">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-view" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </div>
+
+            <!-- Requests Grid -->
+            <div class="requests-grid" id="requests-container">
+                <!-- Requests will be loaded here -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons will be added here -->
+            </div>
+            </div>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="profile-dropdown" id="admin-profile-dropdown" style="display: none;">
+            <!-- Profile dropdown content -->
+        </div>
+    </div>
+
+    <script src="script_admin_dash.js"></script>
+    <script src="all_requests.js"></script>
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METIS Portal</title>
+    <link rel="stylesheet" href="Style_log.css" />
+    <script src="Script_log.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Main Selection Page -->
+      <div id="main-page" class="form-section active">
+        <div class="header">
+          <div class="logo">
+            <img
+              src="emblem_logo.png"
+              alt="METIS Logo"
+              width="120"
+              height="120"
+            />
+          </div>
+          <h1>METIS Portal</h1>
+          <p class="subtitle">Welcome to the Academic Gateway</p>
+        </div>
+
+        <div class="college-info">
+          <p><strong>Select your user type to continue</strong></p>
+        </div>
+
+        <div class="user-type-buttons">
+          <button class="user-type-btn" onclick="showUserSection('student')">
+            Student / Faculty
+          </button>
+          <br />
+          <button class="user-type-btn" onclick="showUserSection('admin')">
+            Admin
+          </button>
+          <br />
+          <button class="user-type-btn" onclick="showUserSection('external')">
+            External User
+          </button>
+        </div>
+        <div style="text-align: center;"><a href="metislab.html">Back To Home</a></div>
+      </div>
+
+      <!-- Student/Faculty Section -->
+      <div id="student-section" class="form-section">
+        <button class="back-btn" onclick="showMainPage()">
+          ← Back to Main
+        </button>
+
+        <div class="header">
+          <h1>Student / Faculty Portal</h1>
+          <p class="subtitle">Access your academic account</p>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="showStudentForm('login')">
+            Login
+          </button>
+          <button class="auth-tab" onclick="showStudentForm('register')">
+            Register
+          </button>
+        </div>
+
+        <!-- Student/Faculty Login Form -->
+        <div id="student-login" class="form-content active">
+          <!-- User Type Selection for Login -->
+          <div class="user-type-selector">
+            <button
+              class="user-select-btn active"
+              onclick="selectUserType('student', 'login')"
+            >
+              Student
+            </button>
+            <button
+              class="user-select-btn"
+              onclick="selectUserType('faculty', 'login')"
+            >
+              Faculty
+            </button>
+          </div>
+
+          <form onsubmit="handleStudentLogin(event)">
+            <div class="form-group">
+              <label for="student-login-id"
+                >User ID <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="student-login-id"
+                required
+                placeholder="Enter your User-ID"
+              />
+            </div>
+            <div class="form-group">
+              <label for="student-login-password"
+                >Password <span class="required">*</span></label
+              >
+              <input
+                type="password"
+                id="student-login-password"
+                required
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <button type="submit" class="submit-btn">Login to Portal</button>
+            <div style="text-align: center; margin-top: 15px;">
+              <a href="#" class="forgot-password-link" onclick="openForgotPasswordModal(); return false;">
+                🔑 Forgot Password?
+              </a>
+            </div>
+          </form>
+          <div id="student-login-success" class="success-message">
+            Login successful! Redirecting to dashboard...
+          </div>
+        </div>
+
+        <!-- Student/Faculty Registration Form -->
+        <div id="student-register" class="form-content">
+          <!-- User Type Selection for Registration -->
+          <div class="user-type-selector">
+            <button
+              class="user-select-btn active"
+              onclick="selectUserType('student', 'register')"
+            >
+              Student
+            </button>
+            <button
+              class="user-select-btn"
+              onclick="selectUserType('faculty', 'register')"
+            >
+              Faculty
+            </button>
+          </div>
+
+          <!-- Student/Faculty Registration Fields -->
+          <form
+            id="student-reg-form"
+            onsubmit="handleStudentRegistration(event)"
+          >
+            <div class="form-group">
+              <label for="student-reg-fname"
+                >First Name <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="student-reg-fname"
+                required
+                placeholder="Enter your First Name"
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="student-reg-lname"
+                >Last Name <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="student-reg-lname"
+                required
+                placeholder="Enter your Last Name"
+              />
+            </div>
+            <div class="form-group" id="reg-number-group">
+              <label for="student-reg-number"
+                ><span id="reg-number-label">Registration Number</span>
+                <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="student-reg-number"
+                required
+                placeholder="Enter your registration number"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="student-reg-email"
+                >College Email ID <span class="required">*</span></label
+              >
+              <input
+                type="email"
+                id="student-reg-email"
+                required
+                placeholder="yourname@college.edu"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="student-reg-phone"
+                >Phone Number <span class="required">*</span></label
+              >
+              <input
+                type="tel"
+                id="student-reg-phone"
+                required
+                placeholder="Enter your phone number"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="student-reg-photo"
+                >Profile Photo (Max 2MB) <span class="required">*</span></label
+              >
+              <input
+                type="file"
+                id="student-reg-photo"
+                accept="image/jpeg,image/jpg,image/png"
+                required
+              />
+              <small style="display: block; margin-top: 5px; color: #666;">
+                Accepted formats: JPG, JPEG, PNG (Max size: 2MB)
+              </small>
+              <div id="photo-preview" style="margin-top: 10px; display: none;">
+                <img id="preview-image" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #ddd;" />
+              </div>
+            </div>
+
+            <div class="form-group" id="class-program-group">
+              <label for="student-reg-class"
+                >Class / Program of Study <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="student-reg-class"
+                required
+                placeholder="Enter your class or program"
+              />
+            </div>
+            <div class="form-group">
+              <label for="student-reg-dep">Department <span class="required">*</span></label>
+              <select id="student-reg-dep" required>
+                <option value="">Select Department</option>
+                <option value="School of Architecture">School of Architecture</option>
+                <option value="School of Business and Management">School of Business and Management</option>
+                <option value="School of Commerce, Finance and Accountancy">School of Commerce, Finance and Accountancy</option>
+                <option value="School of Education">School of Education</option>
+                <option value="School of Engineering and Technology">School of Engineering and Technology</option>
+                <option value="School of Humanities and Performing Arts">School of Humanities and Performing Arts</option>
+                <option value="School of Law">School of Law</option>
+                <option value="School of Psychological Sciences, Education and Social Work">School of Psychological Sciences, Education and Social Work</option>
+                <option value="School of Sciences">School of Sciences</option>
+                <option value="School of Social Sciences">School of Social Sciences</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="student-reg-camp"
+                >Campus <span class="required">*</span></label
+              >
+              <select id="student-reg-camp" required>
+                <option value="">Select Campus</option>
+                <option value="Central Campus">Central Campus</option>
+                <option value="Kengeri Campus">Kengeri Campus</option>
+                <option value="Yeshwanthpur Campus">Yeshwanthpur Campus</option>
+                <option value="Bannerghatta Campus">Bannerghatta Campus</option>
+                <option value="Delhi NCR">Delhi NCR</option>
+                <option value="Pune Lavasa Campus">Pune Lavasa Campus</option>
+              </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Register Account</button>
+          </form>
+          <div id="student-register-success" class="success-message">
+            Registration successful! Welcome to the portal!
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Section -->
+      <div id="admin-section" class="form-section">
+        <button class="back-btn" onclick="showMainPage()">
+          ← Back to Main
+        </button>
+
+        <div class="header">
+          <h1>Admin Portal</h1>
+          <p class="subtitle">Administrative access only</p>
+        </div>
+
+        <!-- Admin Login Form -->
+        <div id="admin-login" class="form-content active">
+          <form onsubmit="handleAdminLogin(event)">
+            <div class="form-group">
+              <label for="admin-login-id"
+                >User ID <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="admin-login-id"
+                required
+                placeholder="Enter your Admin User-ID"
+              />
+            </div>
+            <div class="form-group">
+              <label for="admin-login-password"
+                >Password <span class="required">*</span></label
+              >
+              <input
+                type="password"
+                id="admin-login-password"
+                required
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <button type="submit" class="submit-btn">
+              Login to Admin Portal
+            </button>
+            <div style="text-align: center; margin-top: 15px;">
+              <a href="#" class="forgot-password-link" onclick="openForgotPasswordModal(); return false;">
+                🔑 Forgot Password?
+              </a>
+            </div>
+          </form>
+          <div id="admin-login-success" class="success-message">
+            Admin login successful! Redirecting to admin dashboard...
+          </div>
+        </div>
+      </div>
+
+      <!-- External User Section -->
+      <div id="external-section" class="form-section">
+        <button class="back-btn" onclick="showMainPage()">
+          ← Back to Main
+        </button>
+
+        <div class="header">
+          <h1>External Access</h1>
+          <p class="subtitle">For external users and visitors</p>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="showExternalForm('login')">
+            Login
+          </button>
+          <button class="auth-tab" onclick="showExternalForm('register')">
+            Register
+          </button>
+        </div>
+
+        <!-- External User Login Form -->
+        <div id="external-login" class="form-content active">
+          <form onsubmit="handleExternalLogin(event)">
+            <div class="form-group">
+              <label for="external-login-id"
+                >User ID <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-login-id"
+                required
+                placeholder="Enter your User-ID"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-login-password"
+                >Password <span class="required">*</span></label
+              >
+              <input
+                type="password"
+                id="external-login-password"
+                required
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <button type="submit" class="submit-btn">Access Portal</button>
+            <div style="text-align: center; margin-top: 15px;">
+              <a href="#" class="forgot-password-link" onclick="openForgotPasswordModal(); return false;">
+                🔑 Forgot Password?
+              </a>
+            </div>
+          </form>
+          <div id="external-login-success" class="success-message">
+            Access granted! Loading external user dashboard...
+          </div>
+        </div>
+
+        <!-- External User Registration Form -->
+        <div id="external-register" class="form-content">
+          <form onsubmit="handleExternalRegistration(event)">
+            <div class="form-group">
+              <label for="external-reg-aadhar"
+                >Aadhar Number <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-aadhar"
+                required
+                placeholder="Enter your 12-digit Aadhar number"
+                pattern="[0-9]{12}"
+                maxlength="12"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-fname"
+                >First Name <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-fname"
+                required
+                placeholder="Enter your first name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-lname"
+                >Last Name <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-lname"
+                required
+                placeholder="Enter your last name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-email"
+                >Email Address <span class="required">*</span></label
+              >
+              <input
+                type="email"
+                id="external-reg-email"
+                required
+                placeholder="Enter your email address"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-phone"
+                >Phone Number <span class="required">*</span></label
+              >
+              <input
+                type="tel"
+                id="external-reg-phone"
+                required
+                placeholder="Enter your phone number"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-photo"
+                >Profile Photo (Max 2MB) <span class="required">*</span></label
+              >
+              <input
+                type="file"
+                id="external-reg-photo"
+                accept="image/jpeg,image/jpg,image/png"
+                required
+              />
+              <small style="display: block; margin-top: 5px; color: #666;">
+                Accepted formats: JPG, JPEG, PNG (Max size: 2MB)
+              </small>
+              <div id="external-photo-preview" style="margin-top: 10px; display: none;">
+                <img id="external-preview-image" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 2px solid #ddd;" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-profession"
+                >Profession <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-profession"
+                required
+                placeholder="Enter your profession"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-institution"
+                >Institution <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-institution"
+                required
+                placeholder="Enter your institution name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-address"
+                >Address <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-address"
+                required
+                placeholder="Enter your address"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-pincode"
+                >Pincode <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-pincode"
+                required
+                placeholder="Enter your pincode"
+                pattern="[0-9]{6}"
+                maxlength="6"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-city"
+                >City <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-city"
+                required
+                placeholder="Enter your city"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="external-reg-state"
+                >State <span class="required">*</span></label
+              >
+              <input
+                type="text"
+                id="external-reg-state"
+                required
+                placeholder="Enter your state"
+              />
+            </div>
+
+            <button type="submit" class="submit-btn">
+              Submit Registration
+            </button>
+          </form>
+          <div id="external-register-success" class="success-message">
+            Registration submitted! You will receive login credentials via email
+            within 24 hours.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Reset Password</h2>
+          <span class="close-modal" onclick="closeForgotPasswordModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="forgot-step-1" class="forgot-step">
+            <p style="margin-bottom: 20px; color: #666;">Enter your email address to receive a verification code.</p>
+            <form id="forgot-email-form" onsubmit="handleSendOTP(event)">
+              <div class="form-group">
+                <label for="forgot-email">Email Address <span class="required">*</span></label>
+                <input type="email" id="forgot-email" required placeholder="Enter your registered email" />
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Send Verification Code</button>
+                <button type="button" class="btn btn-secondary" onclick="closeForgotPasswordModal()">Cancel</button>
+              </div>
+            </form>
+          </div>
+          
+          <div id="forgot-step-2" class="forgot-step" style="display: none;">
+            <p style="margin-bottom: 20px; color: #666;">Enter the 6-digit verification code sent to your email.</p>
+            <form id="forgot-otp-form" onsubmit="handleVerifyOTP(event)">
+              <div class="form-group">
+                <label for="forgot-otp">Verification Code <span class="required">*</span></label>
+                <input type="text" id="forgot-otp" required placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}" />
+                <small style="color: #666; display: block; margin-top: 5px;">Code expires in <span id="otp-timer">5:00</span></small>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Verify Code</button>
+                <button type="button" class="btn btn-secondary" onclick="resendOTP()">Resend Code</button>
+              </div>
+            </form>
+          </div>
+          
+          <div id="forgot-step-3" class="forgot-step" style="display: none;">
+            <p style="margin-bottom: 20px; color: #666;">Create your new password.</p>
+            <form id="forgot-reset-form" onsubmit="handleResetPassword(event)">
+              <div class="form-group">
+                <label for="forgot-new-password">New Password <span class="required">*</span></label>
+                <input type="password" id="forgot-new-password" required placeholder="Enter new password" minlength="8" />
+                <small style="color: #666; display: block; margin-top: 5px;">Password must be at least 8 characters and include: uppercase letter, lowercase letter, and digit</small>
+              </div>
+              <div class="form-group">
+                <label for="forgot-confirm-password">Confirm New Password <span class="required">*</span></label>
+                <input type="password" id="forgot-confirm-password" required placeholder="Confirm new password" />
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Reset Password</button>
+                <button type="button" class="btn btn-secondary" onclick="closeForgotPasswordModal()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

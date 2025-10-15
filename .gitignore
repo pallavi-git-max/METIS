@@ -133,14 +133,28 @@ dmypy.json
 *.sqlite
 *.sqlite3
 metis_portal.db
+backend/metis_portal.db
 
 # Uploads
 uploads/*
 !uploads/.gitkeep
+backend/uploads/*
+!backend/uploads/.gitkeep
 
 # Logs
 logs/*
 !logs/.gitkeep
+backend/logs/*
+!backend/logs/.gitkeep
+
+# Utility Scripts (should be organized in scripts/ folder)
+# scripts/migrations/ - Database migration scripts
+# scripts/setup/ - Setup and initialization scripts  
+# scripts/utils/ - Utility and checking scripts
+# scripts/maintenance/ - Fix and update scripts
+# scripts/tests/ - Test scripts
+reorganize_for_github.ps1
+update_html_paths.py
 
 # IDE
 .vscode/

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METIS Lab - Rejected Requests</title>
+    <link rel="stylesheet" href="unified-admin.css" />
+    <script src="script_admin_rejected_requests.js" defer></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-container">
+            <div class="logo">M</div>
+            <div class="logo-text">
+              <div class="logo-title">METIS Lab</div>
+              <div class="logo-subtitle">Admin Dashboard</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-menu">
+          <div class="menu-section">
+            <a href="admin_dash.html" class="menu-item">
+              <span class="menu-icon">📊</span>
+              <span>Dashboard</span>
+            </a>
+          </div>
+
+          <div class="menu-section">
+            <div class="menu-label">MANAGE REQUESTS</div>
+            <a href="all_requests.html" class="menu-item">
+              <span class="menu-icon">📋</span>
+              <span>All Requests</span>
+            </a>
+            <a href="admin_workflow_dashboard.html" class="menu-item">
+              <span class="menu-icon">✅</span>
+              <span>Approval Queue</span>
+            </a>
+            <a href="admin_rejected_requests.html" class="menu-item active">
+              <span class="menu-icon">✖</span>
+              <span>Rejected Requests</span>
+            </a>
+          </div>
+          <div class="menu-section">
+            <a href="Admin_usr_manage.html" class="menu-item">
+              <span class="menu-icon">👥</span>
+              <span>User Management</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <a href="#" class="logout-btn">
+            <span class="menu-icon">🚪</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+          <div class="header-left">
+            <h1>Rejected Requests</h1>
+            <p>View and manage all rejected project requests</p>
+          </div>
+          <div class="header-right">
+            <div class="notification-btn">
+              <span class="menu-icon">🔔</span>
+            </div>
+            <div class="profile-dropdown">
+              <div class="profile-avatar" id="admin-avatar" onclick="toggleAdminProfileDropdown()">
+                <span>AD</span>
+              </div>
+              <div class="profile-dropdown-menu" id="admin-profile-dropdown">
+                <div class="profile-info">
+                  <div class="profile-name" id="admin-profile-dropdown-name">Admin User</div>
+                  <div class="profile-email" id="admin-profile-dropdown-email">admin@metislab.edu</div>
+                  <div class="profile-role" id="admin-profile-dropdown-role">Administrator</div>
+                  <div class="profile-id" id="admin-profile-dropdown-user-id">ID: AD001</div>
+                  <div class="profile-phone" id="admin-profile-dropdown-phone">Phone: Not provided</div>
+                </div>
+                <div class="profile-actions">
+                  <a href="#" class="profile-action">Edit Profile</a>
+                  <a href="#" class="profile-action" onclick="logout()">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+          <!-- Stats Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">✖</div>
+              <div class="stat-content">
+                <div class="stat-number" id="stat-total-rejected">0</div>
+                <div class="stat-label">Total Rejected</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📅</div>
+              <div class="stat-content">
+                <div class="stat-number" id="stat-recent-rejected">0</div>
+                <div class="stat-label">This Week</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">👨‍🏫</div>
+              <div class="stat-content">
+                <div class="stat-number" id="stat-guide-rejected">0</div>
+                <div class="stat-label">By Guide</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">👔</div>
+              <div class="stat-content">
+                <div class="stat-number" id="stat-hod-rejected">0</div>
+                <div class="stat-label">By HOD</div>
+              </div>
+            </div>
+          </div>
+
+          
+
+          <!-- Rejected Requests List -->
+          <div class="content-card">
+            <div class="card-header">
+              <h3>Rejected Requests</h3>
+              <div class="card-badge" id="rejected-count">0 Rejected</div>
+            </div>
+            <div class="card-content">
+              <div id="rejected-requests-list">
+                <div class="no-requests">Loading rejected requests...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

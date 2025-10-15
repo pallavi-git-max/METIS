@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METIS Lab - Role-Based Approval Dashboard</title>
+    <link rel="stylesheet" href="unified-admin.css">
+    <style>
+        .workflow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .workflow-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .workflow-title {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+
+        .workflow-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .approval-stages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .stage-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .stage-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stage-header {
+            padding: 15px 20px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stage-header.guide {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stage-header.hod {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .stage-header.it-services {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .stage-header.final {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+
+        .stage-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .stage-content {
+            padding: 20px;
+        }
+
+        .request-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #007bff;
+        }
+
+        .request-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .request-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .request-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-approve:hover {
+            background: #218838;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-reject:hover {
+            background: #c82333;
+        }
+
+        .btn-view {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background: #138496;
+        }
+
+        .workflow-progress {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+            z-index: 2;
+        }
+
+        .step-circle.completed {
+            background: #28a745;
+        }
+
+        .step-circle.current {
+            background: #007bff;
+        }
+
+        .step-circle.pending {
+            background: #6c757d;
+        }
+
+        .step-circle.rejected {
+            background: #dc3545;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+
+        .progress-line.completed {
+            background: #28a745;
+        }
+
+        .no-requests {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        .request-details {
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            width: 150px;
+            color: #333;
+        }
+
+        .detail-value {
+            flex: 1;
+            color: #666;
+        }
+
+        .rejection-reason {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 10px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo">M</div>
+                    <div class="logo-text">
+                        <div class="logo-title">METIS Lab</div>
+                        <div class="logo-subtitle">Admin Dashboard</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+                <div class="menu-section">
+                    <a href="admin_dash.html" class="menu-item">
+                        <span class="menu-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+
+                <div class="menu-section">
+                    <div class="menu-label">MANAGE REQUESTS</div>
+                    <a href="all_requests.html" class="menu-item">
+                        <span class="menu-icon">📋</span>
+                        <span>All Requests</span>
+                    </a>
+                    <a href="admin_workflow_dashboard.html" class="menu-item active">
+                        <span class="menu-icon">✅</span>
+                        <span>Approval Queue</span>
+                    </a>
+                    <a href="admin_rejected_requests.html" class="menu-item">
+                        <span class="menu-icon">✖</span>
+                        <span>Rejected Requests</span>
+                    </a>
+                </div>
+                
+                <div class="menu-section">
+                    <a href="Admin_usr_manage.html" class="menu-item">
+                        <span class="menu-icon">👥</span>
+                        <span>User Management</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn">
+                    <span class="menu-icon">🚪</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>Role-Based Approval Workflow</h1>
+                    <p>Manage project requests through the complete approval chain</p>
+                </div>
+                <div class="header-right">
+                    <div class="profile-btn" id="admin-avatar">
+                        <span class="avatar-icon">👤</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="workflow-container">
+                <!-- Approval Stages (status bar removed as requested) -->
+                <div class="approval-stages">
+                    <!-- Project Guide Stage -->
+                    <div class="stage-card" id="guide-stage">
+                        <div class="stage-header guide">
+                            <div>
+                                <div>👨‍🏫 Project Guide</div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">First Approval Stage</div>
+                            </div>
+                            <div class="stage-count" id="guide-count">0</div>
+                        </div>
+                        <div class="stage-content">
+                            <div id="guide-requests">
+                                <div class="no-requests">No pending requests</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HOD Stage -->
+                    <div class="stage-card" id="hod-stage">
+                        <div class="stage-header hod">
+                            <div>
+                                <div>👔 Head of Department</div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Department Approval</div>
+                            </div>
+                            <div class="stage-count" id="hod-count">0</div>
+                        </div>
+                        <div class="stage-content">
+                            <div id="hod-requests">
+                                <div class="no-requests">No pending requests</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- IT Services Stage -->
+                    <div class="stage-card" id="it-stage">
+                        <div class="stage-header it-services">
+                            <div>
+                                <div>💻 IT Services</div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Technical Approval</div>
+                            </div>
+                            <div class="stage-count" id="it-count">0</div>
+                        </div>
+                        <div class="stage-content">
+                            <div id="it-requests">
+                                <div class="no-requests">No pending requests</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Final Approval Stage -->
+                    <div class="stage-card" id="final-stage">
+                        <div class="stage-header final">
+                            <div>
+                                <div>✅ Final Approval</div>
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Admin Final Review</div>
+                            </div>
+                            <div class="stage-count" id="final-count">0</div>
+                        </div>
+                        <div class="stage-content">
+                            <div id="final-requests">
+                                <div class="no-requests">No pending requests</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Details Modal -->
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Request Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="request-details" id="requestDetails">
+                <!-- Request details will be populated here -->
+            </div>
+            <div class="request-actions">
+                <button class="btn-view" onclick="workflowDashboard.closeModal()">Close</button>
+            </div>
+            <div id="rejectionForm" style="display: none; margin-top: 10px;">
+                <textarea class="rejection-reason" placeholder="Enter rejection reason..." id="rejectionReason"></textarea>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                  <button class="btn-reject" onclick="workflowDashboard.submitRejection()">Submit Rejection</button>
+                  <button class="btn-view" onclick="workflowDashboard.closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <script src="admin_workflow_dashboard.js"></script>
+</body>
+</html>
