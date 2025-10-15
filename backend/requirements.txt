@@ -14,9 +14,9 @@ SQLAlchemy==2.0.19
 alembic==1.11.1
 
 # Database Drivers
-pyodbc==5.1.0              # For SQL Server (optional)
+# pyodbc==5.1.0              # For SQL Server (optional) - Not needed on Render
 psycopg2-binary==2.9.9     # For PostgreSQL (production recommended)
-PyMySQL==1.1.0             # For MySQL (alternative)
+# PyMySQL==1.1.0             # For MySQL (alternative) - Not needed
 
 # Forms and Validation
 WTForms==3.0.1
@@ -33,9 +33,9 @@ python-dotenv==1.0.0
 requests==2.31.0
 urllib3==2.0.4
 
-# Data Processing
-pandas==2.0.3
-numpy==1.24.3
+# Data Processing (Not needed for basic deployment)
+# pandas==2.0.3
+# numpy==1.24.3
 
 # Date and Time
 python-dateutil==2.8.2
@@ -43,16 +43,16 @@ python-dateutil==2.8.2
 # Logging and Monitoring
 structlog==23.1.0
 
-# Development and Testing
-pytest==7.4.0
-pytest-flask==1.2.0
-pytest-cov==4.1.0
-black==23.7.0
-flake8==6.0.0
+# Development and Testing (Not needed for production)
+# pytest==7.4.0
+# pytest-flask==1.2.0
+# pytest-cov==4.1.0
+# black==23.7.0
+# flake8==6.0.0
 
 # Production Servers
 gunicorn==21.2.0           # For Linux/Mac deployment (Render, Railway, Heroku)
-waitress==3.0.0            # For Windows deployment
+# waitress==3.0.0            # For Windows deployment - Not needed on Render
 
 # Additional Utilities
 click==8.1.6
@@ -60,5 +60,5 @@ itsdangerous==2.1.2
 Jinja2==3.1.2
 MarkupSafe==2.1.3
 
-# Email Support
-secure-smtplib==0.1.1
+# Email Support (Python built-in smtplib is sufficient)
+# secure-smtplib==0.1.1
