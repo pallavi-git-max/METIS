@@ -170,6 +170,28 @@ def create_app():
     @app.route('/dashboard')
     def dashboard():
         return render_template('user_dash.html')
+    
+    # Debug route to view database users (REMOVE IN PRODUCTION)
+    @app.route('/debug/users')
+    def debug_users():
+        from backend.models.user import User
+        users = User.query.all()
+        users_data = []
+        for user in users:
+            users_data.append({
+                'id': user.id,
+                'email': user.email,
+                'name': f"{user.first_name} {user.last_name}",
+                'role': user.role.value,
+                'department': user.department,
+                'student_id': user.student_id,
+                'is_active': user.is_active,
+                'created_at': str(user.created_at)
+            })
+        return jsonify({
+            'total_users': len(users),
+            'users': users_data
+        })
 
     # Serve all files from REG_LOG_DASH at root paths
     @app.route('/<path:filename>')
