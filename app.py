@@ -96,6 +96,7 @@ def create_app():
                         'password': 'Guide@2024!',
                         'student_id': 'GUIDE001',
                         'phone': '9876543210',
+                        'department': 'Administration',
                         'designation': 'Project Guide',
                         'role': RoleEnum.project_guide
                     },
@@ -106,6 +107,7 @@ def create_app():
                         'password': 'HOD@2024!',
                         'student_id': 'HOD001',
                         'phone': '9876543212',
+                        'department': 'Administration',
                         'designation': 'Head of Department',
                         'role': RoleEnum.hod
                     },
@@ -116,6 +118,7 @@ def create_app():
                         'password': 'ITServices@2024!',
                         'student_id': 'IT001',
                         'phone': '9876543213',
+                        'department': 'IT Services',
                         'designation': 'IT Services Manager',
                         'role': RoleEnum.it_services
                     },
@@ -126,6 +129,7 @@ def create_app():
                         'password': 'Admin@2024!',
                         'student_id': 'ADMIN001',
                         'phone': '9876543214',
+                        'department': 'Administration',
                         'designation': 'System Administrator',
                         'role': RoleEnum.admin
                     }
@@ -139,6 +143,7 @@ def create_app():
                             first_name=user_data['first_name'],
                             last_name=user_data['last_name'],
                             role=user_data['role'],
+                            department=user_data['department'],
                             student_id=user_data['student_id'],
                             phone=user_data['phone'],
                             designation=user_data['designation'],
