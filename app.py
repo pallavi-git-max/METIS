@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory, render_template
+from flask import Flask, send_from_directory, render_template, jsonify
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 from backend.config import Config
@@ -163,15 +163,8 @@ def create_app():
     from backend.utils.error_handlers import register_error_handlers
     register_error_handlers(app)
 
-    @app.route('/')
-    def index():
-        return render_template('metislab.html')
-
-    @app.route('/dashboard')
-    def dashboard():
-        return render_template('user_dash.html')
-    
     # Debug route to view database users (REMOVE IN PRODUCTION)
+    # This MUST be before the catch-all route
     @app.route('/debug/users')
     def debug_users():
         from backend.models.user import User
@@ -193,7 +186,16 @@ def create_app():
             'users': users_data
         })
 
+    @app.route('/')
+    def index():
+        return render_template('metislab.html')
+
+    @app.route('/dashboard')
+    def dashboard():
+        return render_template('user_dash.html')
+
     # Serve all files from REG_LOG_DASH at root paths
+    # This catch-all route must be LAST
     @app.route('/<path:filename>')
     def serve_page(filename):
         return send_from_directory(app.static_folder, filename)
