@@ -60,12 +60,11 @@ def create_app():
     # Ensure tables exist to avoid OperationalError (e3q8) on first run
     # This complements migrations for environments where CLI is unavailable
     with app.app_context():
-        # Set SQLite pragmas to reduce locking and improve performance
+        # Set SQLite pragmas to reduce locking and improve performance (PostgreSQL ignores these)
         try:
             from sqlalchemy import text
-            # Only set essential pragmas that don't require exclusive access
             pragmas = [
-                'PRAGMA busy_timeout=60000',  # 60 seconds
+                'PRAGMA busy_timeout=60000',
                 'PRAGMA synchronous=NORMAL',
                 'PRAGMA cache_size=10000',
                 'PRAGMA temp_store=MEMORY'
@@ -79,20 +78,81 @@ def create_app():
         except Exception as e:
             print(f"Warning: Could not set SQLite pragmas: {e}")
         
-        # Create tables with retry logic
-        max_retries = 3
-        for attempt in range(max_retries):
-            try:
-                db.create_all()
-                print("Database tables created successfully")
-                break
-            except Exception as e:
-                print(f"Attempt {attempt + 1} failed: {e}")
-                if attempt == max_retries - 1:
-                    print("Failed to create database tables after all retries")
-                else:
-                    import time
-                    time.sleep(1)  # Wait 1 second before retry
+        # Create tables
+        db.create_all()
+        print("Database tables created successfully")
+        
+        # Auto-create admin users if none exist
+        try:
+            from backend.models.user import User, RoleEnum
+            admin_count = User.query.filter_by(role=RoleEnum.admin).count()
+            if admin_count == 0:
+                print("No admin users found. Creating default admin users...")
+                admin_users = [
+                    {
+                        'email': 'guide@metislab.edu',
+                        'first_name': 'Project',
+                        'last_name': 'Guide',
+                        'password': 'Guide@2024!',
+                        'student_id': 'GUIDE001',
+                        'phone': '9876543210',
+                        'designation': 'Project Guide',
+                        'role': RoleEnum.project_guide
+                    },
+                    {
+                        'email': 'hod@metislab.edu',
+                        'first_name': 'Head',
+                        'last_name': 'Department',
+                        'password': 'HOD@2024!',
+                        'student_id': 'HOD001',
+                        'phone': '9876543212',
+                        'designation': 'Head of Department',
+                        'role': RoleEnum.hod
+                    },
+                    {
+                        'email': 'itservices@metislab.edu',
+                        'first_name': 'IT',
+                        'last_name': 'Services',
+                        'password': 'ITServices@2024!',
+                        'student_id': 'IT001',
+                        'phone': '9876543213',
+                        'designation': 'IT Services Manager',
+                        'role': RoleEnum.it_services
+                    },
+                    {
+                        'email': 'admin@metislab.edu',
+                        'first_name': 'System',
+                        'last_name': 'Admin',
+                        'password': 'Admin@2024!',
+                        'student_id': 'ADMIN001',
+                        'phone': '9876543214',
+                        'designation': 'System Administrator',
+                        'role': RoleEnum.admin
+                    }
+                ]
+                
+                for user_data in admin_users:
+                    existing = User.query.filter_by(email=user_data['email']).first()
+                    if not existing:
+                        user = User(
+                            email=user_data['email'],
+                            first_name=user_data['first_name'],
+                            last_name=user_data['last_name'],
+                            role=user_data['role'],
+                            student_id=user_data['student_id'],
+                            phone=user_data['phone'],
+                            designation=user_data['designation'],
+                            is_active=True
+                        )
+                        user.set_password(user_data['password'])
+                        db.session.add(user)
+                        print(f"Created admin user: {user_data['email']}")
+                
+                db.session.commit()
+                print("Admin users created successfully!")
+        except Exception as e:
+            print(f"Error creating admin users: {e}")
+            db.session.rollback()
 
     # Register error handlers
     from backend.utils.error_handlers import register_error_handlers
