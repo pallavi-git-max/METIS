@@ -27,6 +27,9 @@ class EmailService:
                 logger.warning("SMTP credentials not configured. Email not sent.")
                 return False
 
+            logger.info(f"Attempting to send email via {self.smtp_server}:{self.smtp_port}")
+            logger.info(f"SMTP Username: {self.smtp_username}")
+            
             # Create message
             msg = MIMEMultipart('alternative')
             msg['From'] = f"{self.from_name} <{self.from_email}>"
@@ -41,8 +44,8 @@ class EmailService:
             html_part = MIMEText(html_content, 'html')
             msg.attach(html_part)
 
-            # Send email
-            with smtplib.SMTP(self.smtp_server, self.smtp_port) as server:
+            # Send email with 10 second timeout
+            with smtplib.SMTP(self.smtp_server, self.smtp_port, timeout=10) as server:
                 server.starttls()
                 server.login(self.smtp_username, self.smtp_password)
                 server.send_message(msg)

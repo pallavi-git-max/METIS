@@ -208,6 +208,7 @@ def register():
         # Validate user data
         is_valid, message = validate_user_data(data)
         if not is_valid:
+            logger.error(f"Validation failed: {message}")
             return jsonify({
                 'success': False, 
                 'message': message
@@ -216,6 +217,7 @@ def register():
         # Check if email already exists
         existing_user = User.query.filter_by(email=data['email']).first()
         if existing_user:
+            logger.error(f"Email already registered: {data['email']}")
             return jsonify({
                 'success': False, 
                 'message': 'Email already registered'
@@ -225,6 +227,7 @@ def register():
         if 'student_id' in data and data['student_id']:
             existing_student = User.query.filter_by(student_id=data['student_id']).first()
             if existing_student:
+                logger.error(f"Student ID already exists: {data['student_id']}")
                 return jsonify({
                     'success': False, 
                     'message': 'Student ID already exists'
